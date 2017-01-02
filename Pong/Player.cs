@@ -10,7 +10,7 @@ namespace Pong
 {
     class Player
     {
-        Rectangle pos = new Rectangle(1340, 300, 40, 200);
+        public Rectangle pos = new Rectangle(1340, 300, 40, 200);
         public Player()
         {
 
