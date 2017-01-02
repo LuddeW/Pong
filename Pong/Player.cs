@@ -18,9 +18,13 @@ namespace Pong
 
         public void Update()
         {
-            if (Keyboard.GetState().IsKeyDown(Keys.Up))
+            if (Keyboard.GetState().IsKeyDown(Keys.Up) && pos.Y > 40)
             {
                 pos.Y -= 10;
+            }
+            if (Keyboard.GetState().IsKeyDown(Keys.Down) && pos.Y < 560)
+            {
+                pos.Y += 10;
             }
         }
 
