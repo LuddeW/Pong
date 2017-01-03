@@ -10,7 +10,7 @@ namespace Pong
     class Ball
     {
         public Rectangle hitBox = new Rectangle(700, 400, 20, 20);
-        Vector2 speed = new Vector2(0, 5);
+        Vector2 speed = new Vector2(5, 0);
 
         public Ball()
         {
@@ -23,9 +23,26 @@ namespace Pong
             hitBox.Y += (int)speed.Y;
         }
 
-        public void Intersects()
+        public void IntersectsTop()
         {
             speed.X *= -1;
+            speed.Y = -2;
+        }
+
+        public void IntersectsBottom()
+        {
+            speed.X *= -1;
+            speed.Y = 2;
+        }
+
+        public void IntersectsMiddle()
+        {
+            speed.X *= -1;
+            speed.Y *= -1;
+        }
+
+        public void IntersectsWall()
+        {
             speed.Y *= -1;
         }
 

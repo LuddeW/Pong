@@ -10,7 +10,10 @@ namespace Pong
 {
     class Player
     {
-        public Rectangle pos = new Rectangle(1340, 300, 40, 200);
+        public Rectangle top = new Rectangle(1340, 300, 40, 66);
+        public Rectangle middle = new Rectangle(1340, 366, 40, 66);
+        public Rectangle bottom = new Rectangle(1340, 432, 40, 67);
+        public Vector2 pos = new Vector2(1340, 300);
         public Player()
         {
 
@@ -21,10 +24,16 @@ namespace Pong
             if (Keyboard.GetState().IsKeyDown(Keys.Up) && pos.Y > 40)
             {
                 pos.Y -= 10;
+                top.Y -= 10;
+                middle.Y -= 10;
+                bottom.Y -= 10;
             }
             if (Keyboard.GetState().IsKeyDown(Keys.Down) && pos.Y < 560)
             {
                 pos.Y += 10;
+                top.Y += 10;
+                middle.Y += 10;
+                bottom.Y += 10;
             }
         }
 

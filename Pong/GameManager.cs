@@ -34,9 +34,21 @@ namespace Pong
         {
             player.Update();
             ball.Update();
-            if (ball.hitBox.Intersects(player.pos) || !ball.hitBox.Intersects(playBox))
+            if (ball.hitBox.Intersects(player.middle))
             {
-                ball.Intersects();
+                ball.IntersectsMiddle();
+            }
+            if (ball.hitBox.Intersects(player.top))
+            {
+                ball.IntersectsTop();
+            }
+            if (ball.hitBox.Intersects(player.bottom))
+            {
+                ball.IntersectsBottom();
+            }
+            if (!ball.hitBox.Intersects(playBox))
+            {
+                ball.IntersectsWall();
             }
         }
 
