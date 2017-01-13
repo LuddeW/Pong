@@ -15,11 +15,13 @@ namespace Pong
         Texture2D bar;
         Texture2D balltex;
         Player player;
+        Player player2;
         Ball ball;
         Rectangle playBox = new Rectangle(0, 60, 1400, 680);
         public GameManager()
         {
-            player = new Player();
+            player = new Player(new Rectangle(1340, 300, 40, 66), new Rectangle(1340, 366, 40, 66), new Rectangle(1340, 432, 40, 67), new Vector2(1340, 300));
+            player2 = new Player(new Rectangle(60, 300, 40, 66), new Rectangle(60, 366, 40, 66), new Rectangle(60, 432, 40, 67), new Vector2(60, 300));
             ball = new Ball();
         }
 
@@ -33,16 +35,17 @@ namespace Pong
         public void Update()
         {
             player.Update();
+            player2.Update();
             ball.Update();
-            if (ball.hitBox.Intersects(player.middle))
+            if (ball.hitBox.Intersects(player.middle) || ball.hitBox.Intersects(player2.middle))
             {
                 ball.IntersectsMiddle();
             }
-            if (ball.hitBox.Intersects(player.top))
+            if (ball.hitBox.Intersects(player.top) || ball.hitBox.Intersects(player2.top))
             {
                 ball.IntersectsTop();
             }
-            if (ball.hitBox.Intersects(player.bottom))
+            if (ball.hitBox.Intersects(player.bottom) || ball.hitBox.Intersects(player2.bottom))
             {
                 ball.IntersectsBottom();
             }
@@ -56,6 +59,7 @@ namespace Pong
         {
             sb.Draw(field, new Vector2(0, 0), Color.White);
             player.Draw(sb, bar);
+            player2.Draw(sb, bar);
             ball.Draw(sb, balltex);
         }
     }   

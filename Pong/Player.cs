@@ -10,13 +10,16 @@ namespace Pong
 {
     class Player
     {
-        public Rectangle top = new Rectangle(1340, 300, 40, 66);
-        public Rectangle middle = new Rectangle(1340, 366, 40, 66);
-        public Rectangle bottom = new Rectangle(1340, 432, 40, 67);
-        public Vector2 pos = new Vector2(1340, 300);
-        public Player()
+        public Rectangle top;
+        public Rectangle middle;
+        public Rectangle bottom;
+        Vector2 pos;
+        public Player(Rectangle top, Rectangle middle, Rectangle bottom, Vector2 pos)
         {
-
+            this.bottom = bottom;
+            this.top = top;
+            this.middle = middle;
+            this.pos = pos;
         }
 
         public void Update()
@@ -40,6 +43,9 @@ namespace Pong
         public void Draw(SpriteBatch sb, Texture2D texture)
         {
             sb.Draw(texture, pos, Color.White);
+            sb.Draw(texture, bottom, Color.Red);
+            sb.Draw(texture, middle, Color.Blue);
+            sb.Draw(texture, top, Color.Green);
         }
     }
 }
