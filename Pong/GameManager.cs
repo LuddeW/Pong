@@ -14,7 +14,9 @@ namespace Pong
     class GameManager
     {
         SoundManager soundManager;
-        Song zombie;
+        Song song;
+        SoundEffect blip;
+        SoundEffect blop;
         Clock clock;
         Texture2D field;
         Texture2D bar;
@@ -27,6 +29,7 @@ namespace Pong
         SpriteFont font;
         int player1Score = 0;
         int player2Score = 0;
+        int soundCorrector = 1;
         int startDirection;
         enum GameState { Play, Score, Menu}
         GameState currentGameState = GameState.Play;
@@ -44,8 +47,10 @@ namespace Pong
             bar = Content.Load<Texture2D>("Player");
             balltex = Content.Load<Texture2D>("Ball");
             font = Content.Load<SpriteFont>(@"Font");
-            zombie = Content.Load<Song>(@"zombie");
-            soundManager = new SoundManager(zombie);
+            song = Content.Load<Song>(@"spel 1");
+            blip = Content.Load<SoundEffect>(@"blip");
+            blop = Content.Load<SoundEffect>(@"blop");
+            soundManager = new SoundManager(song, blip, blop);
             soundManager.PlaySong();
         }
 
@@ -72,22 +77,7 @@ namespace Pong
                         player.Update();
                         player2.Update();
                         ball.Update();
-                        if (ball.hitBox.Intersects(player.middle) || ball.hitBox.Intersects(player2.middle))
-                        {
-                            ball.IntersectsMiddle();
-                        }
-                        else if (ball.hitBox.Intersects(player.top) || ball.hitBox.Intersects(player2.top))
-                        {
-                            ball.IntersectsTop();
-                        }
-                        else if (ball.hitBox.Intersects(player.bottom) || ball.hitBox.Intersects(player2.bottom))
-                        {
-                            ball.IntersectsBottom();
-                        }
-                        if (!ball.hitBox.Intersects(playBox))
-                        {
-                            ball.IntersectsWall();
-                        }
+                        HandleContact();
                     }
                     break;
                 case GameState.Score:
@@ -140,6 +130,45 @@ namespace Pong
 
             sb.DrawString(font, p1, new Vector2(1400 / 4 * 3 - p1Len.X / 2, 800 / 2 - p1Len.Y / 2), Color.Gray);
             sb.DrawString(font, p2, new Vector2(1400 / 4 - p2Len.X / 2, 800 / 2 - p2Len.Y / 2), Color.Gray);
+        }
+
+        private void HandleContact()
+        {
+            if (ball.hitBox.Intersects(player.middle) || ball.hitBox.Intersects(player2.middle))
+            {
+                ball.IntersectsMiddle();
+                HandleSounds();
+            }
+            else if (ball.hitBox.Intersects(player.top) || ball.hitBox.Intersects(player2.top))
+            {
+                ball.IntersectsTop();
+                HandleSounds();
+
+            }
+            else if (ball.hitBox.Intersects(player.bottom) || ball.hitBox.Intersects(player2.bottom))
+            {
+                ball.IntersectsBottom();
+                HandleSounds();
+            }
+            if (!ball.hitBox.Intersects(playBox))
+            {
+                ball.IntersectsWall();
+                HandleSounds();
+            }
+        }
+
+        private void HandleSounds()
+        {
+            if (soundCorrector == 2)
+            {
+                soundManager.PlayBlip();
+                soundCorrector = 1;
+            }
+            else
+            {
+                soundManager.PlayBlop();
+                soundCorrector = 2;
+            }
         }
     }   
 }

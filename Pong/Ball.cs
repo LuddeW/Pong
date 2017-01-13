@@ -49,7 +49,6 @@ namespace Pong
                 speed.X -= 1;
             }
             speed.X *= -1;
-            Console.WriteLine(speed);
         }
 
         public void IntersectsWall()

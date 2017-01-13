@@ -52,9 +52,21 @@
 /processorParam:TextureFormat=Compressed
 /build:Font.spritefont
 
-#begin zombie.mp3
+#begin blip.mp3
+/importer:Mp3Importer
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:blip.mp3
+
+#begin blop.mp3
+/importer:Mp3Importer
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:blop.mp3
+
+#begin spel 1.mp3
 /importer:Mp3Importer
 /processor:SongProcessor
 /processorParam:Quality=Best
-/build:zombie.mp3
+/build:spel 1.mp3
 

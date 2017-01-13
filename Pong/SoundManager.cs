@@ -9,18 +9,31 @@ namespace Pong
 {
     class SoundManager
     {
-        Song zombie;
-        public SoundManager(Song zombie)
+        Song song;
+        SoundEffect blip;
+        SoundEffect blop;
+        public SoundManager(Song song, SoundEffect blip, SoundEffect blop)
         {
-            this.zombie = zombie;
+            this.song = song;
+            this.blip = blip;
+            this.blop = blop;
         }
 
         public void PlaySong()
         {
-            MediaPlayer.Play(zombie);
+            MediaPlayer.Play(song);
             MediaPlayer.IsRepeating = true;
+            MediaPlayer.Volume = 0.3f;
         }
 
+        public void PlayBlip()
+        {
+            blip.Play();
+        }
 
+        public void PlayBlop()
+        {
+            blop.Play();
+        }
     }
 }
