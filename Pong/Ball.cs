@@ -9,12 +9,15 @@ namespace Pong
 {
     class Ball
     {
-        public Rectangle hitBox = new Rectangle(700, 400, 20, 20);
-        Vector2 speed = new Vector2(5, 0);
+        public Rectangle hitBox;
+        public Vector2 speed = new Vector2(5, 0);
+        Vector2 startPos;
+        
 
-        public Ball()
+        public Ball(Vector2 startPos)
         {
-
+            this.startPos = startPos;
+             hitBox = new Rectangle((int)startPos.X, (int)startPos.Y, 20, 20);
         }
 
         public void Update()
@@ -40,6 +43,10 @@ namespace Pong
             if (speed.X > 0)
             {
                 speed.X += 1;
+            }
+            else
+            {
+                speed.X -= 1;
             }
             speed.X *= -1;
             Console.WriteLine(speed);
