@@ -37,8 +37,12 @@ namespace Pong
 
         public void IntersectsMiddle()
         {
+            if (speed.X > 0)
+            {
+                speed.X += 1;
+            }
             speed.X *= -1;
-            speed.Y *= -1;
+            Console.WriteLine(speed);
         }
 
         public void IntersectsWall()
