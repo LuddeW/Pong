@@ -25,7 +25,7 @@ namespace Pong
         Player player;
         Player player2;
         Ball ball;
-        Rectangle playBox = new Rectangle(0, 60, 1400, 680);
+        Rectangle playBox = new Rectangle(1, 60, 1400, 680);
         Vector2 ballStartPos = new Vector2(700, 400);
         SpriteFont font;
         SpriteFont menuFont;
