@@ -22,7 +22,7 @@ namespace Pong
 
         protected override void Initialize()
         {
-            gameManager = new GameManager();
+            gameManager = new GameManager(this);
 
             base.Initialize();
         }
@@ -32,6 +32,11 @@ namespace Pong
             spriteBatch = new SpriteBatch(GraphicsDevice);
             gameManager.Load(Content);
 
+        }
+
+        public void SetScreen()
+        {
+            gameManager.SetScreen();
         }
 
         protected override void UnloadContent()
