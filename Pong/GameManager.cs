@@ -24,6 +24,7 @@ namespace Pong
         Texture2D balltex;
         Player player;
         Player player2;
+        AI ai;
         Ball ball;
         Rectangle playBox = new Rectangle(0, 60, 1400, 680);
         Vector2 ballStartPos = new Vector2(700, 400);
@@ -39,10 +40,11 @@ namespace Pong
         GameState currentGameState = GameState.Menu;
         public GameManager(Game1 game)
         {
-            this.game = game;
-            player = new Player(new Rectangle(1340, 300, 40, 66), new Rectangle(1340, 366, 40, 66), new Rectangle(1340, 432, 40, 67), new Vector2(1340, 300), 1);
-            player2 = new Player(new Rectangle(60, 300, 40, 66), new Rectangle(60, 366, 40, 66), new Rectangle(60, 432, 40, 67), new Vector2(60, 300), 2);
+            this.game = game;           
             ball = new Ball(ballStartPos);
+            player = new Player(new Rectangle(1340, 300, 40, 66), new Rectangle(1340, 366, 40, 66), new Rectangle(1340, 432, 40, 67), new Vector2(1340, 300), 1, ball);
+            //player2 = new Player(new Rectangle(60, 300, 40, 66), new Rectangle(60, 366, 40, 66), new Rectangle(60, 432, 40, 67), new Vector2(60, 300), 2, ball);
+            ai = new AI(new Rectangle(60, 300, 40, 66), new Rectangle(60, 366, 40, 66), new Rectangle(60, 432, 40, 67), new Vector2(60, 300), 2, ball);
             clock = new Clock();
         }
 
@@ -83,7 +85,8 @@ namespace Pong
                             currentGameState = GameState.Score;
                         }
                         player.Update();
-                        player2.Update();
+                        ai.Update();
+                        //player2.Update();
                         ball.Update();
                         HandleContact();
                     }
@@ -92,7 +95,8 @@ namespace Pong
                     {
                         clock.AddTime(0.3f);
                         player.Update();
-                        player2.Update();
+                        ai.Update();
+                        //player2.Update();
                         ball.hitBox.X = (int)ballStartPos.X;
                         ball.hitBox.Y = (int)ballStartPos.Y;
                         if (clock.Timer() > 20.0f)
@@ -127,7 +131,8 @@ namespace Pong
                     sb.Draw(field, new Vector2(0, 0), Color.White);
                     PrintString(sb);
                     player.Draw(sb, bar);
-                    player2.Draw(sb, bar);
+                    ai.Draw(sb, bar);
+                    //player2.Draw(sb, bar);
                     ball.Draw(sb, balltex);
                     break;
 
@@ -135,14 +140,15 @@ namespace Pong
                     sb.Draw(field, new Vector2(0, 0), Color.White);
                     PrintString(sb);
                     player.Draw(sb, bar);
-                    player2.Draw(sb, bar);
+                    ai.Draw(sb, bar);
+                    //player2.Draw(sb, bar);
                     ball.Draw(sb, balltex);
                     break;
 
                 case GameState.Menu:
                     sb.Draw(field, new Vector2(0, 0), Color.White);
                     player.Draw(sb, bar);
-                    player2.Draw(sb, bar);
+                    //player2.Draw(sb, bar);
                     menu.Draw(sb);
                     break;
             }
@@ -163,18 +169,18 @@ namespace Pong
 
         private void HandleContact()
         {
-            if (ball.hitBox.Intersects(player.middle) || ball.hitBox.Intersects(player2.middle))
+            if (ball.hitBox.Intersects(player.middle) || /*ball.hitBox.Intersects(player2.middle) ||*/ ball.hitBox.Intersects(ai.middle))
             {
                 ball.IntersectsMiddle();
                 HandleSounds();
             }
-            else if (ball.hitBox.Intersects(player.top) || ball.hitBox.Intersects(player2.top))
+            else if (ball.hitBox.Intersects(player.top) || /*ball.hitBox.Intersects(player2.top) ||*/ ball.hitBox.Intersects(ai.top))
             {
                 ball.IntersectsTop();
                 HandleSounds();
 
             }
-            else if (ball.hitBox.Intersects(player.bottom) || ball.hitBox.Intersects(player2.bottom))
+            else if (ball.hitBox.Intersects(player.bottom) || /*ball.hitBox.Intersects(player2.bottom) ||*/ ball.hitBox.Intersects(ai.bottom))
             {
                 ball.IntersectsBottom();
                 HandleSounds();

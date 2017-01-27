@@ -38,6 +38,7 @@
     <ApplicationIcon>Icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="AI.cs" />
     <Compile Include="Ball.cs" />
     <Compile Include="Clock.cs" />
     <Compile Include="Game1.cs" />
