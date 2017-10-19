@@ -15,15 +15,13 @@ namespace Pong
         public Rectangle bottom;
         int playerIndex;
         Vector2 pos;
-        Ball ball;
-        public Player(Rectangle top, Rectangle middle, Rectangle bottom, Vector2 pos, int playerIndex, Ball ball)
+        public Player(Rectangle top, Rectangle middle, Rectangle bottom, Vector2 pos, int playerIndex)
         {
             this.bottom = bottom;
             this.top = top;
             this.middle = middle;
             this.pos = pos;
             this.playerIndex = playerIndex;
-            this.ball = ball;
         }
 
         public void Update()

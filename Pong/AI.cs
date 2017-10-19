@@ -14,6 +14,7 @@ namespace Pong
         public Rectangle top;
         public Rectangle middle;
         public Rectangle bottom;
+        Rectangle middleBox;
         int playerIndex;
         Vector2 pos;
         Ball ball;
@@ -31,46 +32,52 @@ namespace Pong
         public void Update()
         {
             Move();
+            UpdateMiddleBox();
             switch (status)
             {
                 case Status.Idle:
                     {
-                        if (ball.hitBox.X < 400 && middle.Y < ball.hitBox.Y)
+                        if (middleBox.Intersects(ball.hitBox))
+                        {
+                            break;
+                        }
+                        else if (ball.hitBox.X < 500 && middle.Y <= ball.hitBox.Y && ball.speed.X <= 0)
                         {
                             status = Status.MoveDown;
                         }
-                        else if(ball.hitBox.X < 400 && middle.Y > ball.hitBox.Y)
+                        else if(ball.hitBox.X < 500 && middle.Y >= ball.hitBox.Y && ball.speed.X <= 0)
                         {
                             status = Status.MoveUp;
                         }
                     }
                     break;
                 case Status.MoveUp:
-                    {
-                        if (ball.hitBox.X < 400 && middle.Y < ball.hitBox.Y)
-                        {
-                            status = Status.MoveDown;
-                        }
-                        else if (ball.hitBox.X > 400)
+                    {                  
+                        if (ball.hitBox.X > 500 || middleBox.Intersects(ball.hitBox))
                         {
                             status = Status.Idle;
+                            break;
                         }
+                        else if (ball.hitBox.X < 500 && middle.Y  + 132 < ball.hitBox.Y && ball.speed.X <= 0)
+                        {
+                            status = Status.MoveDown;
+                        }                       
                     }
                     break;
                 case Status.MoveDown:
                     {
-                        if (ball.hitBox.X < 400 && middle.Y > ball.hitBox.Y)
-                        {
-                            status = Status.MoveUp;
-                        }
-                        else if (ball.hitBox.X > 400)
+                        if (ball.hitBox.X > 500 || middleBox.Intersects(ball.hitBox))
                         {
                             status = Status.Idle;
+                            break;
                         }
+                        else if (ball.hitBox.X < 500 && middle.Y > ball.hitBox.Y && ball.speed.X <= 0)
+                        {
+                            status = Status.MoveUp;
+                        }                     
                     }
                     break;
             }
-
         }
 
         public void Move()
@@ -89,6 +96,14 @@ namespace Pong
                 middle.Y += 10;
                 bottom.Y += 10;
             }
+        }
+
+        public void UpdateMiddleBox()
+        {
+            middleBox = middle;
+            middleBox.Width = 500;
+            middleBox.Height = 66 * 3;
+            middleBox.Y = middle.Y - 66;
         }
 
         public void Draw(SpriteBatch sb, Texture2D texture)

@@ -32,6 +32,7 @@ namespace Pong
         SpriteFont menuFont;
         KeyboardState prevKeyboardState;
         Menu menu;
+        DecisionTree dt;
         int player1Score = 0;
         int player2Score = 0;
         int soundCorrector = 1;
@@ -42,8 +43,9 @@ namespace Pong
         {
             this.game = game;           
             ball = new Ball(ballStartPos);
-            player = new Player(new Rectangle(1340, 300, 40, 66), new Rectangle(1340, 366, 40, 66), new Rectangle(1340, 432, 40, 67), new Vector2(1340, 300), 1, ball);
+            player = new Player(new Rectangle(1340, 300, 40, 66), new Rectangle(1340, 366, 40, 66), new Rectangle(1340, 432, 40, 67), new Vector2(1340, 300), 1);
             //player2 = new Player(new Rectangle(60, 300, 40, 66), new Rectangle(60, 366, 40, 66), new Rectangle(60, 432, 40, 67), new Vector2(60, 300), 2, ball);
+            //dt = new DecisionTree(new Rectangle(60, 300, 40, 66), new Rectangle(60, 366, 40, 66), new Rectangle(60, 432, 40, 67), new Vector2(60, 300), 2, ball);
             ai = new AI(new Rectangle(60, 300, 40, 66), new Rectangle(60, 366, 40, 66), new Rectangle(60, 432, 40, 67), new Vector2(60, 300), 2, ball);
             clock = new Clock();
         }
@@ -87,6 +89,7 @@ namespace Pong
                         player.Update();
                         ai.Update();
                         //player2.Update();
+                        //dt.Update();
                         ball.Update();
                         HandleContact();
                     }
@@ -97,6 +100,7 @@ namespace Pong
                         player.Update();
                         ai.Update();
                         //player2.Update();
+                        //dt.Update();
                         ball.hitBox.X = (int)ballStartPos.X;
                         ball.hitBox.Y = (int)ballStartPos.Y;
                         if (clock.Timer() > 20.0f)
@@ -133,6 +137,7 @@ namespace Pong
                     player.Draw(sb, bar);
                     ai.Draw(sb, bar);
                     //player2.Draw(sb, bar);
+                    //dt.Draw(sb, bar);
                     ball.Draw(sb, balltex);
                     break;
 
@@ -142,6 +147,7 @@ namespace Pong
                     player.Draw(sb, bar);
                     ai.Draw(sb, bar);
                     //player2.Draw(sb, bar);
+                    //dt.Draw(sb, bar);
                     ball.Draw(sb, balltex);
                     break;
 
@@ -169,18 +175,18 @@ namespace Pong
 
         private void HandleContact()
         {
-            if (ball.hitBox.Intersects(player.middle) || /*ball.hitBox.Intersects(player2.middle) ||*/ ball.hitBox.Intersects(ai.middle))
+            if (ball.hitBox.Intersects(player.middle) || /*ball.hitBox.Intersects(player2.middle) || */ball.hitBox.Intersects(ai.middle) /*ball.hitBox.Intersects(dt.middle)*/)
             {
                 ball.IntersectsMiddle();
                 HandleSounds();
             }
-            else if (ball.hitBox.Intersects(player.top) || /*ball.hitBox.Intersects(player2.top) ||*/ ball.hitBox.Intersects(ai.top))
+            else if (ball.hitBox.Intersects(player.top) || /*ball.hitBox.Intersects(player2.top) || */ball.hitBox.Intersects(ai.top) /*ball.hitBox.Intersects(dt.top)*/)
             {
                 ball.IntersectsTop();
                 HandleSounds();
 
             }
-            else if (ball.hitBox.Intersects(player.bottom) || /*ball.hitBox.Intersects(player2.bottom) ||*/ ball.hitBox.Intersects(ai.bottom))
+            else if (ball.hitBox.Intersects(player.bottom) || /*ball.hitBox.Intersects(player2.bottom) || */ball.hitBox.Intersects(ai.bottom)/* ball.hitBox.Intersects(dt.bottom)*/)
             {
                 ball.IntersectsBottom();
                 HandleSounds();
